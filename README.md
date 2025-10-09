@@ -9,3 +9,6 @@
 
   Run `npm run dev` to start the development server.
   
+  ## Deploy
+
+  Every commit on branch develop on this repository will trigger a deployment on github pages
