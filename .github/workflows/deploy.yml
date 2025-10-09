@@ -2,7 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - develop
   workflow_dispatch:
 
 permissions:
@@ -11,21 +12,25 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version: '20'
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build project
         run: npm run build
 
       - name: Configure Pages
