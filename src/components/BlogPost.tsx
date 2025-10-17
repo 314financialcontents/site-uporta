@@ -14,6 +14,10 @@ interface BlogPostProps {
 export function BlogPost({ post, onBack, onPostClick }: BlogPostProps) {
   const { t, language } = useLanguage();
   const blogPosts = getBlogPosts(language);
+  
+  // Get the current post in the active language by matching the ID
+  const currentPost = blogPosts.find(p => p.id === post.id) || post;
+  
   // Convert markdown-style content to JSX
   const formatContent = (content: string) => {
     const lines = content.split('\n');
@@ -62,7 +66,7 @@ export function BlogPost({ post, onBack, onPostClick }: BlogPostProps) {
   };
 
   // Get other posts (excluding current one)
-  const otherPosts = blogPosts.filter(p => p.id !== post.id);
+  const otherPosts = blogPosts.filter(p => p.id !== currentPost.id);
 
   return (
     <div className="min-h-screen bg-background">
@@ -84,23 +88,23 @@ export function BlogPost({ post, onBack, onPostClick }: BlogPostProps) {
               <article className="space-y-8">
                 <header className="space-y-4">
                   <h1 className="text-3xl md:text-4xl leading-tight" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                    {post.title}
+                    {currentPost.title}
                   </h1>
                   <div className="flex items-center gap-2 text-sm text-primary/70">
                     <Calendar className="w-4 h-4" />
                     <span>
-                      {post.date}
+                      {currentPost.date}
                     </span>
                   </div>
                   <p className="text-lg text-muted-foreground leading-relaxed border-l-4 border-primary pl-6 py-2">
-                    {post.intro}
+                    {currentPost.intro}
                   </p>
                 </header>
 
                 {/* Article content */}
                 <div className="prose prose-lg max-w-none">
                   <ul className="space-y-1 list-none">
-                    {formatContent(post.content)}
+                    {formatContent(currentPost.content)}
                   </ul>
                 </div>
               </article>

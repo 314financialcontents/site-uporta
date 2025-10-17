@@ -1,6 +1,6 @@
 
   {
-      "name": "Web Page for uPorta",
+      "name": "uPorta",
       "version": "0.1.0",
       "private": true,
       "dependencies": {
